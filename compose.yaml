@@ -1,0 +1,9 @@
+services:
+  mysql:
+    image: 'mysql:8.3'
+    ports:
+      - '3357:3306'
+    environment:
+      MYSQL_DATABASE: 'loanapi'
+      MYSQL_ROOT_PASSWORD: 'beran123'
+      MYSQL_ROOT_HOST: '%'
