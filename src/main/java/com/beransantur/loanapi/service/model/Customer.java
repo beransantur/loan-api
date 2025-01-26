@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @Builder
 public class Customer {
+    private Integer id;
     private String name;
     private String surname;
     private BigDecimal creditLimit;
@@ -16,14 +17,14 @@ public class Customer {
     private List<Loan> loans;
 
     public boolean hasEnoughLimit(BigDecimal amount) {
-        if (creditLimit.compareTo(amount) < 0) {
+        if (creditLimit.subtract(usedCreditLimit).compareTo(amount) < 0) {
             return false;
         }
 
         return true;
     }
 
-    public void reduceLimit(BigDecimal amount) {
+    public void reduceCreditLimit(BigDecimal amount) {
         usedCreditLimit = usedCreditLimit.add(amount);
         creditLimit = creditLimit.subtract(amount);
     }

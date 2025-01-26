@@ -32,7 +32,6 @@ public class CreateLoanRequest {
         Loan loan = Loan.builder()
                 .installmentNumber(installmentNumber.getValue())
                 .build();
-        loan.setTotalAmount(amount, interestRate);
         return loan;
     }
 

@@ -7,9 +7,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "loan")
@@ -48,10 +46,9 @@ public class LoanEntity {
                 .isPaid(isPaid)
                 .createdAt(createdAt)
                 .build();
-        Loan.builder()
-                .installments(installments.stream().map((installmentEntity -> installmentEntity.toModel(loan)))
-                        .collect(Collectors.toCollection(ArrayList::new)));
 
-        return loan;
+        return loan.toBuilder()
+                .installments(installments.stream().map((installmentEntity -> installmentEntity.toModel(loan)))
+                        .toList()).build();
     }
 }

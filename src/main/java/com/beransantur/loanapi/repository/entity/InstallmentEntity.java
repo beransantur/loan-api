@@ -36,6 +36,7 @@ public class InstallmentEntity extends BaseEntity {
 
     public Installment toModel(Loan loan) {
         return Installment.builder()
+                .id(id)
                 .loan(loan)
                 .amount(amount)
                 .paidAmount(paidAmount)

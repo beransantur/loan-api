@@ -35,11 +35,17 @@ public class CustomerEntity {
 
     public Customer toModel() {
         return Customer.builder()
+                .id(id)
                 .name(userDetail.getName())
                 .surname(userDetail.getSurname())
                 .creditLimit(creditLimit)
                 .usedCreditLimit(usedCreditLimit)
                 .loans(loans.stream().map(LoanEntity::toModel).collect(Collectors.toCollection(ArrayList::new)))
                 .build();
+    }
+
+    public void updateFromModel(Customer customer) {
+        creditLimit = customer.getCreditLimit();
+        usedCreditLimit = customer.getUsedCreditLimit();
     }
 }

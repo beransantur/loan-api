@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Builder
+@Builder(toBuilder=true)
 @Getter
 public class Loan {
     private Integer id;
@@ -22,7 +22,7 @@ public class Loan {
     @Builder.Default
     private LocalDate createdAt = LocalDate.now();
 
-    public void setTotalAmount(BigDecimal initialAmount, BigDecimal interestRate) {
+    public void setTotalAmountWithInterest(BigDecimal initialAmount, BigDecimal interestRate) {
         this.totalAmount = calculateTotalAmount(initialAmount, interestRate);
     }
 
