@@ -1,5 +1,6 @@
 package com.beransantur.loanapi.repository.entity;
 
+import com.beransantur.loanapi.service.model.RoleType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,12 +11,17 @@ import java.util.List;
 @Table(name = "role")
 @Setter
 @Getter
-public class RoleEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
-    private Integer id;
+public class RoleEntity extends BaseEntity {
 
-    @ManyToMany(mappedBy = "likedCourses")
-    private List<UserEntity> users;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "role_authority",
+            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+    private List<AuthorityEntity> authorities;
 }

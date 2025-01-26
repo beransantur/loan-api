@@ -1,7 +1,8 @@
 package com.beransantur.loanapi.service.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum InstallmentNumber {
-    THREE_MONTHS(3),
     SIX_MONTHS(6),
     NINE_MONTHS(9),
     TWELVE_MONTHS(12),
@@ -13,5 +14,6 @@ public enum InstallmentNumber {
         value = newValue;
     }
 
+    @JsonValue
     public int getValue() { return value; }
 }

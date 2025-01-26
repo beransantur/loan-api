@@ -10,20 +10,16 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "installment")
 @Setter
 @Getter
-public class InstallmentEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
-    private Integer id;
+public class InstallmentEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "loan_id", nullable = false)
     private LoanEntity loan;
 
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
     @Column(name = "paid_amount")
@@ -32,7 +28,7 @@ public class InstallmentEntity {
     @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;
 
-    @Column(name = "payment_date", nullable = false)
+    @Column(name = "payment_date")
     private LocalDate paymentDate;
 
     @Column(name = "is_paid")

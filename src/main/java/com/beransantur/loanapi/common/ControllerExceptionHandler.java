@@ -1,4 +1,4 @@
-package com.beransantur.loanapi.config;
+package com.beransantur.loanapi.common;
 
 import com.beransantur.loanapi.controller.dto.BaseResponse;
 import com.beransantur.loanapi.service.model.exception.*;
@@ -22,7 +22,7 @@ public class ControllerExceptionHandler {
                 .message(ErrorCodeAndMessage.SYSTEM.getMessage())
                 .build();
 
-        log.error(ErrorCodeAndMessage.SYSTEM.getMessage());
+        e.printStackTrace();
 
         return BaseResponse.builder()
                 .success(false)

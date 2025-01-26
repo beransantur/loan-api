@@ -15,8 +15,10 @@ public class Loan {
     private BigDecimal totalAmount;
     private Integer installmentNumber;
     private Customer customer;
+    @Builder.Default
     private Boolean isPaid = Boolean.FALSE;
     private List<Installment> installments;
+    @Builder.Default
     private LocalDate createdAt = LocalDate.now();
 
     public void setTotalAmount(BigDecimal initialAmount, BigDecimal interestRate) {

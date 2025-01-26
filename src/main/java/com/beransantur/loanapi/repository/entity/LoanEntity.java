@@ -25,10 +25,10 @@ public class LoanEntity {
     @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customer;
 
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-    @Column(name = "installment_count")
+    @Column(name = "installment_number", nullable = false)
     private Integer installmentNumber;
 
     @Column(name = "is_paid")

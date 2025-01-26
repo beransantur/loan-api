@@ -20,12 +20,6 @@ public class CustomerEntity {
     @Column(name = "id", nullable = false, updatable = false)
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "surname")
-    private String surname;
-
     @Column(name = "credit_limit")
     private BigDecimal creditLimit;
 
@@ -35,10 +29,14 @@ public class CustomerEntity {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private List<LoanEntity> loans;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private UserEntity userDetail;
+
     public Customer toModel() {
         return Customer.builder()
-                .name(name)
-                .surname(surname)
+                .name(userDetail.getName())
+                .surname(userDetail.getSurname())
                 .creditLimit(creditLimit)
                 .usedCreditLimit(usedCreditLimit)
                 .loans(loans.stream().map(LoanEntity::toModel).collect(Collectors.toCollection(ArrayList::new)))

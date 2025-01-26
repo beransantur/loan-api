@@ -3,7 +3,9 @@ package com.beransantur.loanapi.controller;
 import com.beransantur.loanapi.controller.dto.CreateLoanRequest;
 import com.beransantur.loanapi.controller.dto.CreateLoanResponse;
 import com.beransantur.loanapi.service.CustomerLoanService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,7 +15,8 @@ public class CustomerLoanController {
     private final CustomerLoanService customerLoanService;
 
     @PostMapping("/{customerId}/loans")
-    public CreateLoanResponse createLoan(@PathVariable Integer customerId, @RequestBody CreateLoanRequest createLoanRequest) {
+    @PreAuthorize("hasAuthority('create-loan')")
+    public CreateLoanResponse createLoan(@PathVariable Integer customerId, @RequestBody @Valid CreateLoanRequest createLoanRequest) {
         return customerLoanService.createLoan(customerId, createLoanRequest);
     }
 
