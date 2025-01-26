@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 @Getter
 public class Loan {
+    private Integer id;
     private BigDecimal totalAmount;
     private Integer installmentNumber;
     private Customer customer;

@@ -42,6 +42,7 @@ public class LoanEntity {
 
     public Loan toModel() {
         Loan loan = Loan.builder()
+                .id(id)
                 .totalAmount(amount)
                 .installmentNumber(installmentNumber)
                 .isPaid(isPaid)

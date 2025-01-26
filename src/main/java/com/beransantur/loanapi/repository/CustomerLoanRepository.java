@@ -1,6 +1,5 @@
 package com.beransantur.loanapi.repository;
 
-import com.beransantur.loanapi.service.model.exception.NotFoundException;
 import com.beransantur.loanapi.repository.entity.CustomerEntity;
 import com.beransantur.loanapi.repository.entity.InstallmentEntity;
 import com.beransantur.loanapi.repository.entity.LoanEntity;
@@ -8,6 +7,7 @@ import com.beransantur.loanapi.repository.jpa.CustomerJpaRepository;
 import com.beransantur.loanapi.repository.jpa.LoanJpaRepository;
 import com.beransantur.loanapi.service.model.Installment;
 import com.beransantur.loanapi.service.model.Loan;
+import com.beransantur.loanapi.service.model.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +19,15 @@ import java.util.List;
 public class CustomerLoanRepository {
     private final CustomerJpaRepository customerJpaRepository;
     private final LoanJpaRepository loanJpaRepository;
+
+    public List<Loan> retrieveLoans(Integer customerId) {
+        CustomerEntity customer = customerJpaRepository.findById(customerId)
+                .orElseThrow(() -> new NotFoundException("customer", customerId));
+
+        return customer.getLoans().stream()
+                .map(LoanEntity::toModel)
+                .toList();
+    }
 
     public Integer saveLoan(Integer customerId, Loan loan) {
         CustomerEntity customerEntity = customerJpaRepository.findById(customerId)
