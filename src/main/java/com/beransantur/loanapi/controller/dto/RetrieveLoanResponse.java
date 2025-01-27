@@ -23,7 +23,7 @@ public class RetrieveLoanResponse {
     public static RetrieveLoanResponse fromModel(Loan loan) {
         return RetrieveLoanResponse.builder()
                 .id(loan.getId())
-                .totalAmount(loan.getTotalAmount())
+                .totalAmount(loan.getAmount())
                 .installmentNumber(loan.getInstallmentNumber())
                 .isPaid(loan.getIsPaid())
                 .createdAt(loan.getCreatedAt())

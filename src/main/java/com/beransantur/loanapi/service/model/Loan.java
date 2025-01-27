@@ -7,13 +7,15 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Builder(toBuilder=true)
+@Builder(toBuilder = true)
 @Getter
 public class Loan {
     private Integer id;
-    private BigDecimal totalAmount;
+    private BigDecimal amount;
     private Integer installmentNumber;
     private Customer customer;
     @Builder.Default
@@ -23,26 +25,40 @@ public class Loan {
     private LocalDate createdAt = LocalDate.now();
 
     public void setTotalAmountWithInterest(BigDecimal initialAmount, BigDecimal interestRate) {
-        this.totalAmount = calculateTotalAmount(initialAmount, interestRate);
+        this.amount = calculateTotalAmount(initialAmount, interestRate);
     }
 
-    public void addInstallments() {
+    public void setInstallments() {
         BigDecimal installmentAmount = calculateInstallmentAmount();
-        LocalDate firstOfNextMonth = getFirstDayOfNextMonth(createdAt);
+        LocalDate firstDayOfNextMonth = getFirstDayOfNextMonth(createdAt);
         List<Installment> installments = new ArrayList<>(installmentNumber);
 
         for (int i = 0; i < installmentNumber; i++) {
             Installment installment = Installment.builder()
                     .loan(this)
                     .amount(installmentAmount)
-                    .dueDate(firstOfNextMonth)
+                    .dueDate(firstDayOfNextMonth)
                     .build();
 
-            firstOfNextMonth = getFirstDayOfNextMonth(firstOfNextMonth);
             installments.add(installment);
+            firstDayOfNextMonth = getFirstDayOfNextMonth(firstDayOfNextMonth);
         }
 
         this.installments = installments;
+    }
+
+    public List<Installment> getInstallments() {
+        return installments.stream()
+                .sorted(Comparator.comparing(Installment::getDueDate))
+                .collect(Collectors.toList());
+    }
+
+    public boolean isAllInstallmentsPaid() {
+        return installments.stream().allMatch((installment -> installment.getIsPaid().equals(Boolean.TRUE)));
+    }
+
+    public void setIsPaid(Boolean isPaid) {
+        this.isPaid = isPaid;
     }
 
     private BigDecimal calculateTotalAmount(BigDecimal initialAmount, BigDecimal interestRate) {
@@ -50,12 +66,12 @@ public class Loan {
     }
 
     private BigDecimal calculateInstallmentAmount() {
-        return totalAmount.divide(new BigDecimal(installmentNumber), 2, RoundingMode.HALF_UP);
+        return amount.divide(new BigDecimal(installmentNumber), 2, RoundingMode.HALF_UP);
     }
 
     private LocalDate getFirstDayOfNextMonth(LocalDate time) {
         return time
-                .withMonth(createdAt.getMonthValue() + 1)
+                .withMonth(time.getMonthValue() + 1)
                 .withDayOfMonth(1);
     }
 }

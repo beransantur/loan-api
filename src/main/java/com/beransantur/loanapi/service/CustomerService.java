@@ -29,13 +29,13 @@ public class CustomerService {
     public CreateLoanResponse createLoan(Integer customerId, CreateLoanRequest createLoanRequest) {
         Loan loan = createLoanRequest.toModel();
         loan.setTotalAmountWithInterest(createLoanRequest.getAmount(), createLoanRequest.getInterestRate());
-        loan.addInstallments();
+        loan.setInstallments();
 
         Customer customer = customerRepository.getById(customerId);
-        if (!customer.hasEnoughLimit(loan.getTotalAmount())) {
+        if (!customer.hasEnoughLimit(loan.getAmount())) {
             throw new ValidationException(CUSTOMER_NOT_HAVE_ENOUGH_CREDIT_LIMIT);
         }
-        customer.reduceCreditLimit(loan.getTotalAmount());
+        customer.reduceCreditLimit(loan.getAmount());
 
         Integer savedLoanId = customerRepository.saveLoan(customer, loan);
         return new CreateLoanResponse(savedLoanId);

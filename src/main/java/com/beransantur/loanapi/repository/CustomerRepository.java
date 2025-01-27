@@ -58,7 +58,7 @@ public class CustomerRepository {
 
     private LoanEntity buildLoanEntity(Loan loan, CustomerEntity customerEntity) {
         LoanEntity loanEntity = new LoanEntity();
-        loanEntity.setAmount(loan.getTotalAmount());
+        loanEntity.setAmount(loan.getAmount());
         loanEntity.setCustomer(customerEntity);
         loanEntity.setIsPaid(loan.getIsPaid());
         loanEntity.setInstallmentNumber(loan.getInstallmentNumber());

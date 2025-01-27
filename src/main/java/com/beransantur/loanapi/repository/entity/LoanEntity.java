@@ -41,7 +41,7 @@ public class LoanEntity {
     public Loan toModel() {
         Loan loan = Loan.builder()
                 .id(id)
-                .totalAmount(amount)
+                .amount(amount)
                 .installmentNumber(installmentNumber)
                 .isPaid(isPaid)
                 .createdAt(createdAt)
@@ -51,4 +51,5 @@ public class LoanEntity {
                 .installments(installments.stream().map((installmentEntity -> installmentEntity.toModel(loan)))
                         .toList()).build();
     }
+
 }

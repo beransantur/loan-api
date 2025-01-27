@@ -15,14 +15,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class RetrieveInstallmentResponse {
     private Integer id;
-    private BigDecimal amount;
-    private BigDecimal paidAmount;
     private LocalDate dueDate;
-    private LocalDate paymentDate;
+    private BigDecimal amount;
     private Boolean isPaid;
+    private BigDecimal paidAmount;
+    private LocalDate paymentDate;
 
     public static RetrieveInstallmentResponse fromModel(Installment installment) {
         return RetrieveInstallmentResponse.builder()
+                .id(installment.getId())
                 .amount(installment.getAmount())
                 .paidAmount(installment.getPaidAmount())
                 .dueDate(installment.getDueDate())

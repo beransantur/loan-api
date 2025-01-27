@@ -1,4 +1,4 @@
-package com.beransantur.loanapi.service.model;
+package com.beransantur.loanapi.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -15,5 +15,7 @@ public enum InstallmentNumber {
     }
 
     @JsonValue
-    public int getValue() { return value; }
+    public int getValue() {
+        return value;
+    }
 }

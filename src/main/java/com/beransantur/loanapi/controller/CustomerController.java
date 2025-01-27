@@ -1,5 +1,6 @@
 package com.beransantur.loanapi.controller;
 
+import com.beransantur.loanapi.controller.dto.BaseResponse;
 import com.beransantur.loanapi.controller.dto.CreateLoanRequest;
 import com.beransantur.loanapi.controller.dto.CreateLoanResponse;
 import com.beransantur.loanapi.controller.dto.RetrieveLoanResponse;
@@ -19,14 +20,22 @@ public class CustomerController {
 
     @GetMapping("/{customerId}/loans")
     @PreAuthorize("hasAuthority('read-loan') or hasAuthority('create-loan')")
-    public List<RetrieveLoanResponse> retrieveLoans(@PathVariable Integer customerId) {
-        return customerService.retrieveLoans(customerId);
+    public BaseResponse<List<RetrieveLoanResponse>> retrieveLoans(@PathVariable Integer customerId) {
+        List<RetrieveLoanResponse> retrieveLoanResponses = customerService.retrieveLoans(customerId);
+
+        return BaseResponse.<List<RetrieveLoanResponse>>builder()
+                .data(retrieveLoanResponses)
+                .build();
     }
 
     @PostMapping("/{customerId}/loans")
     @PreAuthorize("hasAuthority('create-loan')")
-    public CreateLoanResponse createLoan(@PathVariable Integer customerId, @RequestBody @Valid CreateLoanRequest createLoanRequest) {
-        return customerService.createLoan(customerId, createLoanRequest);
+    public BaseResponse<CreateLoanResponse> createLoan(@PathVariable Integer customerId, @Valid @RequestBody CreateLoanRequest createLoanRequest) {
+        CreateLoanResponse createLoanResponse = customerService.createLoan(customerId, createLoanRequest);
+
+        return BaseResponse.<CreateLoanResponse>builder()
+                .data(createLoanResponse)
+                .build();
     }
 
 }

@@ -1,32 +1,24 @@
 package com.beransantur.loanapi.controller.dto;
 
-import com.beransantur.loanapi.service.model.InstallmentNumber;
 import com.beransantur.loanapi.service.model.Loan;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.*;
+import lombok.Value;
 
 import java.math.BigDecimal;
 
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Value
 public class CreateLoanRequest {
     @NotNull
     @PositiveOrZero
-    private BigDecimal amount;
+    BigDecimal amount;
 
+    @NotNull
     @DecimalMin(value = "0.1")
     @DecimalMax(value = "0.5")
-    private BigDecimal interestRate;
+    BigDecimal interestRate;
 
-    private InstallmentNumber installmentNumber;
+    @NotNull
+    InstallmentNumber installmentNumber;
 
     public Loan toModel() {
         Loan loan = Loan.builder()
