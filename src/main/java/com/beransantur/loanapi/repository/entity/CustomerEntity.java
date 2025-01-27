@@ -27,7 +27,7 @@ public class CustomerEntity {
     private BigDecimal usedCreditLimit;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
-    private List<LoanEntity> loans;
+    private List<LoanEntity> loans = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

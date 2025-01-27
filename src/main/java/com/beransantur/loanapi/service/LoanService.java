@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -73,7 +72,10 @@ public class LoanService {
             loan.setIsPaid(Boolean.TRUE);
         }
 
-        loanRepository.update(loan);
+        if (paidInstallmentCount > 0) {
+            loanRepository.update(loan);
+        }
+
         return new PayLoanResponse(totalPaidAmount, paidInstallmentCount, loan.getIsPaid());
     }
 

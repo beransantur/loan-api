@@ -7,6 +7,8 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static com.beransantur.loanapi.common.Constants.DISCOUNT_COEFFICIENT;
+import static com.beransantur.loanapi.common.Constants.PENALTY_COEFFICIENT;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.time.temporal.ChronoUnit.MONTHS;
 
@@ -64,12 +66,11 @@ public class Installment {
                 dateBefore,
                 dateAfter);
 
-        final String DISCOUNT_COEFFICIENT = "0.001";
         BigDecimal discountAmount = amount.multiply(new BigDecimal(DISCOUNT_COEFFICIENT)).multiply(new BigDecimal(daysBetween));
         return paidAmount.subtract(discountAmount);
     }
 
-    public BigDecimal calculatePenalty(BigDecimal amount, LocalDate paymentDate) {
+    public BigDecimal calculatePenalty(BigDecimal paidAmount, LocalDate paymentDate) {
         LocalDate dateBefore = dueDate;
         LocalDate dateAfter = paymentDate;
 
@@ -77,9 +78,8 @@ public class Installment {
                 dateBefore,
                 dateAfter);
 
-        final String PENALTY_COEFFICIENT = "0.001";
         BigDecimal penaltyAmount = amount.multiply(new BigDecimal(PENALTY_COEFFICIENT)).multiply(new BigDecimal(daysBetween));
-        return paidAmount.subtract(penaltyAmount);
+        return paidAmount.add(penaltyAmount);
     }
 
 }

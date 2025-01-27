@@ -1,6 +1,5 @@
 package com.beransantur.loanapi.repository.entity;
 
-import com.beransantur.loanapi.service.model.RoleType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

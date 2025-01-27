@@ -2,11 +2,13 @@ package com.beransantur.loanapi.controller.dto;
 
 import com.beransantur.loanapi.service.model.Loan;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Value;
 
 import java.math.BigDecimal;
 
 @Value
+@Builder
 public class CreateLoanRequest {
     @NotNull
     @PositiveOrZero

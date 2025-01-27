@@ -70,6 +70,11 @@ public class Loan {
     }
 
     private LocalDate getFirstDayOfNextMonth(LocalDate time) {
+        if(time.getMonthValue() == 12) { //next year
+            return time.withYear(time.getYear() + 1)
+                    .withMonth(1)
+                    .withDayOfMonth(1);
+        }
         return time
                 .withMonth(time.getMonthValue() + 1)
                 .withDayOfMonth(1);
