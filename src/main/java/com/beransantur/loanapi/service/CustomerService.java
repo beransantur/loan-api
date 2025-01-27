@@ -9,6 +9,7 @@ import com.beransantur.loanapi.service.model.Loan;
 import com.beransantur.loanapi.service.model.exception.ValidationException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 import static com.beransantur.loanapi.service.model.exception.ErrorCodeAndMessage.CUSTOMER_NOT_HAVE_ENOUGH_CREDIT_LIMIT;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
@@ -38,6 +40,9 @@ public class CustomerService {
         customer.reduceCreditLimit(loan.getAmount());
 
         Integer savedLoanId = customerRepository.saveLoan(customer, loan);
+
+        log.info("Loan is successfully created with id {}", savedLoanId);
+
         return new CreateLoanResponse(savedLoanId);
     }
 }

@@ -8,6 +8,7 @@ import com.beransantur.loanapi.service.model.Installment;
 import com.beransantur.loanapi.service.model.Loan;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class LoanService {
     private final LoanRepository loanRepository;
@@ -75,6 +77,8 @@ public class LoanService {
         if (paidInstallmentCount > 0) {
             loanRepository.update(loan);
         }
+
+        log.info("Loan payment is successful, total paid installment count {}", paidInstallmentCount);
 
         return new PayLoanResponse(totalPaidAmount, paidInstallmentCount, loan.getIsPaid());
     }
